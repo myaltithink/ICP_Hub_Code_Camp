@@ -23,6 +23,7 @@ function App() {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
+    timeStamp: null,
     postedAt: ''
   })
 
@@ -42,12 +43,18 @@ function App() {
         let newDisplay = []
         query.docs.map(doc => {
           const data = doc.data()
+          const shortText = (data.content.length > 30) ? data.content.substring(0, 30) + "........" : "";
           newDisplay.push({
             title: data.title,
             content: data.content,
+            contentShort: shortText,
             postedAt: data.postedAt,
+            timeStamp: data.timeStamp,
             showMore: false
           })
+        })
+        newDisplay.sort((item1, item2) => {
+          return item2.timeStamp - item1.timeStamp
         })
         setDisplay(newDisplay)
       })
@@ -58,6 +65,7 @@ function App() {
     setFormData({
       title: '',
       content: '',
+      timeStamp: null,
       postedAt: ''
     })
   }
@@ -72,17 +80,22 @@ function App() {
 
   const createRant = () => {
 
+    const date = new Date();
+
     const rant = {
       ...formData,
-      postedAt: new Date().toDateString()
+      postedAt: date.toDateString(),
+      timeStamp: date
     }
 
     const doc = addDoc(firestoreCollection, rant)
       .then((result) => {
         let displays = display;
+        const shortText = (rant.content.length > 30) ? rant.content.substring(0, 30) + "........" : "";
         const newRant = {
           ...rant,
-          showMore: false
+          showMore: false,
+          contentShort: shortText
         }
         displays.unshift(newRant)
         setDisplay(displays)
@@ -124,9 +137,9 @@ function App() {
                   <small className='posted-at'>Posted At: {rant.postedAt}</small>
                 </Card.Header>
                 <Card.Body>
-                  <p style={{ whiteSpace: 'pre' }}>
-                    {rant.showMore ? rant.content : `${rant.content.substring(0, 30)}........`}
-                    {(rant.content.length <= 38) ?
+                  <p style={{ whiteSpace: 'pre', textWrap: 'balance' }}>
+                    {rant.showMore ? rant.content : (rant.contentShort != "") ? rant.contentShort : rant.content}
+                    {(rant.content.length <= 30) ?
                       null
                       :
                       <Button variant='text' color='success' className='show-more' onClick={() => toggleShowMore(index)}>{rant.showMore ? "Show Less" : "Show More"}</Button>
