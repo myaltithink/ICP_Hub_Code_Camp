@@ -9,11 +9,17 @@
     "prebuild": "npm run prebuild --workspaces --if-present",
     "pretest": "npm run prebuild --workspaces --if-present",
     "start": "npm start --workspaces --if-present",
-    "test": "npm test --workspaces --if-present"
+    "test": "npm test --workspaces --if-present",
+    "update-backend": "dfx canister create icp_project_backend && dfx generate icp_project_backend",
+    "local-deploy": "npm run update-backend && dfx deploy"
   },
   "type": "module",
   "workspaces": [
     "src/icp_project_backend",
     "src/icp_project_frontend"
-  ]
+  ],
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "font-awesome": "^4.7.0"
+  }
 }

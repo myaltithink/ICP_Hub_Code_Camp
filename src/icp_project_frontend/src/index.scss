@@ -1,37 +1,83 @@
 body {
-  font-family: sans-serif;
-  font-size: 1.5rem;
+  background-color: #f5f5f5 !important;
+  color: #4e4e4e !important;
 }
 
-img {
-  max-width: 50vw;
-  max-height: 25vw;
-  display: block;
-  margin: auto;
+.posted-at,
+.title {
+  color: #4e4e4e;
 }
 
-form {
+.title-container {
+  padding: 50px;
+  border-bottom: solid 3px green;
+  padding-bottom: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f5f5f5;
+}
+
+.title-container>div {
+  margin: 0px 20px;
+}
+
+.title-container .add-btn {
+  width: 100%;
+}
+
+.center {
   display: flex;
   justify-content: center;
-  gap: 0.5em;
-  flex-flow: row wrap;
-  max-width: 40vw;
-  margin: auto;
-  align-items: baseline;
 }
 
-button[type="submit"] {
-  padding: 5px 20px;
-  margin: 10px auto;
-  float: right;
+.rant-list .item {
+  border: solid 2px darkgreen;
+  width: 600px;
+  margin: 20px;
+  border-radius: 10px;
 }
 
-#greeting {
-  margin: 10px auto;
-  padding: 10px 60px;
-  border: 1px solid #222;
+.rant-list .item p {
+  margin: 0;
 }
 
-#greeting:empty {
-  display: none;
+.rant-list .show-more {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 30px;
+}
+
+.rant-list .no-rant {
+  margin: 20px;
+  font-size: 20px;
+}
+
+textarea {
+  resize: none !important;
+}
+
+@media screen and (max-width: 640px) {
+
+  .title-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .rant-list .item {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+
+  .title-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .rant-list .item {
+    width: 80vw;
+  }
 }
